@@ -4,7 +4,7 @@ const mongoose = require("mongoose")
 //Admin Scehema for customer fields
 const AdminSchema = new mongoose.Schema(
     {
-        Pasword:{
+        Password:{
             type:String,
         },
         Email:{

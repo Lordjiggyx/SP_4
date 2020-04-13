@@ -13,7 +13,7 @@ export class Shop extends Component {
     state ={
         email:"",
         items:[],
-        admin:false
+        admin:this.props.admin
     }
 
     componentDidMount()
