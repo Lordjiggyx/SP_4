@@ -6,9 +6,9 @@ const router = express.Router()
 const Customer = require("../Models/Customer")
 
 //Test
-router.get("/Customers/test" , (req , res)=>
+router.get("/Customer/test" , (req , res)=>
 {
-    return "customer"
+    return res.json("customer")
 })
 
 module.exports = router

@@ -8,7 +8,7 @@ const Admin = require("../Models/Admin")
 //Test
 router.get("/Admin/test" , (req , res)=>
 {
-    return "admin"
+    return res.json("admin")
 })
 
 module.exports = router

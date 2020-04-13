@@ -8,7 +8,7 @@ const Review = require("../Models/Review")
 //Test
 router.get("/Review/test" , (req , res)=>
 {
-    return "review"
+    return res.json("review")
 })
 
 module.exports = router
