@@ -57,7 +57,7 @@ export class Register extends Component {
              
             })
             
-            ).then(  this.setState({EmptyError:false}))
+            ).then(this.setState({EmptyError:false}))
 
 
 

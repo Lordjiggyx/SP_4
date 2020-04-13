@@ -37,9 +37,7 @@ router.post("/Customer/login" , (req , res)=>
 
     Customer.findOne({Email:email})
     .then(c =>
-        {
-
-           
+        {  
             if(!c)
             {
                  res.json({msg:"User Does Not Exist"})

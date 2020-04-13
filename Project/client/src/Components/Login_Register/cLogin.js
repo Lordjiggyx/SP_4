@@ -6,6 +6,7 @@ import {
     Link
   } from "react-router-dom";
   import axios from "axios"
+import Shop from '../Shop';
 export class cLogin extends Component {
     state = {
         email:"",
@@ -13,7 +14,8 @@ export class cLogin extends Component {
         servermsg:"",
         EmptyError:null,
         ServerError:false,
-        visible : false
+        visible : false,
+        step:0
 
     }
 
@@ -71,6 +73,7 @@ export class cLogin extends Component {
                 else
                 {
                     console.log(res.data)
+                    this.setState({step:1})
                 }
             
             })
@@ -82,9 +85,12 @@ export class cLogin extends Component {
     }
 
     render() {
+        const {step} = this.state
 
-
-        return (
+        switch(step)
+        {
+            case 0:
+                return (
             <div>
                  <Container>
                 <h1> Enter the following details to Login</h1>
@@ -109,7 +115,12 @@ export class cLogin extends Component {
                     </Container>
             </div>
         )
+        case 1:
+        return(
+            <Shop/>
+        )
     }
+}
 }
 
 export default cLogin
