@@ -29,4 +29,38 @@ router.post("/Customer/register" , (req , res)=>
     
 })
 
+router.post("/Customer/login" , (req , res)=>
+{
+    console.log(req.body.user)
+
+    const {email , password} = req.body.user
+
+    Customer.findOne({Email:email})
+    .then(c =>
+        {
+
+           
+            if(!c)
+            {
+                 res.json({msg:"User Does Not Exist"})
+            }
+            else if(c.Password  == password)
+            {
+                const success =
+                {
+                    user:c,
+                    msg:"success"
+                }
+                res.json(success)
+            }
+           else  if(c.Password  != password)
+            {
+                
+                 res.json({msg:"Incorrect Password"})
+            }
+        }
+    )
+    
+})
+
 module.exports = router

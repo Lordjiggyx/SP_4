@@ -12,7 +12,6 @@ export class Register extends Component {
         pay:"Visa",
         shipping:"",
         EmptyError:null,
-        EmailError:""
 
     }
 
