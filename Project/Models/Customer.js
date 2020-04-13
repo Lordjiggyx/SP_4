@@ -11,10 +11,6 @@ const CustomerSchema = new mongoose.Schema(
             type:String,
             
         },
-        UserName:
-        {
-            type:String,
-        },
         Shipping:
         {
             type:String,

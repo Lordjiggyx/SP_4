@@ -31,7 +31,7 @@ const ItemSchema = new mongoose.Schema(
 )
 
 //Creating a user object based off of schema
-let Item = mongoose.model("Custoomer" , ItemSchema)
+let Item = mongoose.model("Item" , ItemSchema)
 
 //Making object exportable
 module.exports = Item

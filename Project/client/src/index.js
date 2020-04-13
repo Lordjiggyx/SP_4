@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
-
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css"
 //Allows for route manipulation
 import {
   BrowserRouter as Router,
@@ -12,12 +11,22 @@ import {
 
 //Components
 import Landing from "../src/Components/Landing"
+import Register from "./Components/Login_Register/Register"
+import Login from './Components/Login_Register/Login';
+import alogin from './Components/Login_Register/alogin';
+import cLogin from './Components/Login_Register/cLogin';
+
 
 
 const routes =(
   <Router>
     <div>
       <Route exact path = "/" component ={Landing}/>
+      <Route path = "/Register" component ={Register}/>
+      <Route path = "/Login" component={Login}/>
+      <Route path = "/aLogin" component={alogin}/>
+      <Route path = "/cLogin" component={cLogin}/>
+      
     </div>
   </Router>
 )
