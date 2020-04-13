@@ -16,7 +16,7 @@ const AdminSchema = new mongoose.Schema(
 )
 
 //Creating a admin object based off of schema
-let Admin = mongoose.model("Admin" , CustomerSchema)
+let Admin = mongoose.model("Admin" , AdminSchema)
 
 //Making object exportable
 module.exports = Admin

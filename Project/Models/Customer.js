@@ -27,7 +27,7 @@ const CustomerSchema = new mongoose.Schema(
 )
 
 //Creating a user object based off of schema
-let Customer = mongoose.model("Custoomer" , CustomerSchema)
+let Customer = mongoose.model("Customer" , CustomerSchema)
 
 //Making object exportable
 module.exports = Customer

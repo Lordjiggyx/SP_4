@@ -6,7 +6,7 @@ const ReviewSchema = new mongoose.Schema(
     {
         ItemId:{
             type: mongoose.Schema.Types.ObjectId,
-            ref = 'items'
+            ref:'items'
         }
         ,
         Review:{
@@ -20,7 +20,7 @@ const ReviewSchema = new mongoose.Schema(
 )
 
 //Creating a user object based off of schema
-let Review = mongoose.model("Custoomer" , ReviewSchema)
+let Review = mongoose.model("Review" , ReviewSchema)
 
 //Making object exportable
 module.exports = Review
