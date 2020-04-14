@@ -113,6 +113,7 @@ export class alogin extends Component {
         return(
             <Shop
             admin={admin}
+            
             />
         )
     }

@@ -2,8 +2,9 @@
 const express = require("express")
 const router = express.Router()
 
-//Bring in Customer model
+//Bring in Admin model
 const Admin = require("../Models/Admin")
+const Item = require("../Models/Item")
 
 //Test
 router.get("/Admin/test" , (req , res)=>
@@ -42,5 +43,30 @@ router.post("/Admin/login" , (req , res)=>
     )
     
 })
+
+
+router.post("/Admin/RemoveStock" , (req , res)=>
+{
+    Item.findOne({Title:req.body.Item.Title})
+    .then(item =>
+        {
+            item.Stock = item.Stock - req.body.Item.Q
+            item.save()
+           
+        })
+})
+
+
+router.post("/Admin/AddStock" , (req , res)=>
+{
+    Item.findOne({Title:req.body.Item.Title})
+    .then(item =>
+        {
+            item.Stock = item.Stock + parseFloat(req.body.Item.Q)
+            item.save()
+          
+        })
+})
+
 
 module.exports = router
