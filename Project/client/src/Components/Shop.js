@@ -16,11 +16,13 @@ export class Shop extends Component {
         admin:this.props.admin,
         addStock:false,
         removeStock:false,
+        addCart:false,
+        cart:[],
         quantity:0,
         title:"",
         query:"",
         queryType:"Title",
-        sortType:""
+        sortType:"Title - Ascending"
         
     }
 
@@ -62,6 +64,14 @@ export class Shop extends Component {
        })
     }
 
+    cartAdd=(title)=>
+    {
+       this.setState({
+        addCart:!this.state.cartAdd
+        ,title:title
+       })
+    }
+
 
     removeStock=()=>
     {
@@ -95,12 +105,22 @@ export class Shop extends Component {
        
     }
 
+    addToCart=(title)=>
+    {
+        const cartreq = this.state.cart
+        axios.get(`/Items/getItem/${title}`)
+        .then( res => {
+            cartreq.push(res.data)
+            this.setState({cart:cartreq})
+        })
+    }
+
 
 
     render() {
 
         if(this.state.sortType == "Title - Ascending")
-        {
+        { 
             this.state.items.sort((a,b)=> (a.Title > b.Title) ? 1 : -1)
         }
         else if(this.state.sortType == "Title - Descending")
@@ -146,6 +166,7 @@ export class Shop extends Component {
                     <h1>Welcome to the shop</h1>
                     
                     <h2>Items</h2>
+                    {this.state.admin==false ? <h3>Items in cart {this.state.cart.length}</h3> : null}
                     <Container>
                     
                     {this.state.admin==false ? <Button>View Cart </Button> : null}
@@ -183,7 +204,7 @@ export class Shop extends Component {
                         </div>
                         :
                         <div>
-                        <Button>Add To Cart</Button>
+                        <Button onClick={()=> this.addToCart(item.Title)}>Add To Cart</Button>
                         <Button>Review</Button>
                         </div>
                     
@@ -223,6 +244,34 @@ export class Shop extends Component {
                     </ModalBody>
 
                 </Modal>
+
+                {/* <Modal isOpen={this.state.addCart} toggle={this.cartAdd}>
+                    <ModalHeader>Add To Cart</ModalHeader>
+                    <ModalBody>
+                        
+                            <Label for="quantity">Quantity</Label>
+                            <Input  type="text" name = "quantity "id="quantity1" onChange={this.handleChange("quantity")}></Input>
+
+                            <Button onClick={()=>this.addToCart()}>Add To Cart</Button>
+                            <Button onClick={()=>this.cartAdd(" ")}>Cancel</Button>
+                    </ModalBody>
+
+                </Modal> */}
+
+                <Modal isOpen={this.state.removeStock} toggle={this.RMT}>
+                    <ModalHeader>Remove Stock</ModalHeader>
+                    <ModalBody>
+                        
+                            <Label for="quantity">Quantity</Label>
+                            <Input  type="text" name = "quantity "id="quantity1" onChange={this.handleChange("quantity")}></Input>
+
+                            <Button onClick={this.removeStock}>Remove</Button>
+                            <Button onClick={()=>this.RMT("")}>Cancel</Button>
+                    </ModalBody>
+
+                </Modal>
+
+                
             </div>
         )
     }

@@ -24,4 +24,22 @@ router.get("/Items/unsorted" , (req , res)=>
        }
 )})
 
+router.get("/Items/getItem/:title" , (req , res)=>
+{
+    //finds all items
+    Item.findOne({Title:req.params.title})
+    //callback to send items back in JSON Array
+    .then(item => 
+       {
+        if(!item)
+        {
+            return res.status(400).json({msg:`Item does not exist`})
+        }
+        else
+        {
+            res.json(item)
+        }
+       }
+)})
+
 module.exports = router
