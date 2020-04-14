@@ -27,7 +27,10 @@ export class Shop extends Component {
         viewCart:false,
         ViewCustomers:false,
         ViewCustomerHistory:false,
-        CustomerHistory:[]
+        CustomerHistory:[],
+        revmodal:false,
+        rating:1,
+        review:""
         
         
     }
@@ -40,6 +43,7 @@ export class Shop extends Component {
             this.getCustomers()
         }
     }
+
 
     getCustomers()
     {
@@ -73,6 +77,14 @@ export class Shop extends Component {
     {
        this.setState({
         addStock:!this.state.addStock,
+        title:title
+       })
+    }
+
+    revmodal=(title)=>
+    {
+       this.setState({
+        revmodal:!this.state.revmodal,
         title:title
        })
     }
@@ -126,6 +138,17 @@ export class Shop extends Component {
 
     }
 
+    addReview=()=>
+    {
+
+        const Item =
+        {
+            Name:this.state.title,
+            Rating:this.state.rating,
+            Review:this.state.review
+        }
+        axios.post("/Customer/AddReview", {Item}).then(this.setState({revmodal:false , title:"" , rating:"" , review:""}))
+    }
 
     sortItem(e)
     {
@@ -143,6 +166,8 @@ export class Shop extends Component {
             this.setState({cart:cartreq})
         })
     }
+
+
 
 
 
@@ -277,7 +302,7 @@ export class Shop extends Component {
                         :
                         <div>
                         <Button onClick={()=> this.addToCart(item.Title)}>Add To Cart</Button>
-                        <Button>Review</Button>
+                        <Button onClick={()=>this.revmodal(item.Title)}>Review</Button>
                         </div>
                     
                     }
@@ -319,15 +344,26 @@ export class Shop extends Component {
 
                
 
-                <Modal isOpen={this.state.removeStock} toggle={this.RMT}>
-                    <ModalHeader>Remove Stock</ModalHeader>
+                <Modal isOpen={this.state.revmodal} toggle={()=>this.revmodal}>
+                    <ModalHeader>Add Review</ModalHeader>
                     <ModalBody>
-                        
-                            <Label for="quantity">Quantity</Label>
-                            <Input  type="text" name = "quantity "id="quantity1" onChange={this.handleChange("quantity")}></Input>
 
-                            <Button onClick={this.removeStock}>Remove</Button>
-                            <Button onClick={()=>this.RMT("")}>Cancel</Button>
+                    <Label >Rating</Label>
+                            <Input  type="select"  onChange={this.handleChange("rating")}>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </Input>
+
+                            <Label >Review</Label>
+                            <Input  type="textarea" rows="4"  onChange={this.handleChange("review")}></Input>
+                        
+                           
+
+                            <Button onClick={this.addReview}>Submit</Button>
+                            <Button onClick={()=>this.revmodal}>Cancel</Button>
                     </ModalBody>
 
                 </Modal>

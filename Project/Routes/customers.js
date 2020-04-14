@@ -6,6 +6,7 @@ const router = express.Router()
 const Customer = require("../Models/Customer")
 const Item = require("../Models/Item")
 const po = require("../Models/po")
+const Review = require("../Models/Review")
 //Test
 router.get("/Customer/getall" , (req , res)=>
 {
@@ -96,6 +97,20 @@ router.post("/Customer/buyItems/:email" , (req , res)=>
     pos.save()
     
 })
+
+
+
+router.post("/Customer/AddReview/" , (req , res)=>
+{
+    const newRev = new Review()
+
+    newRev.ItemName = req.body.Item.Name
+    newRev.Rating = req.body.Item.Rating
+    newRev.Review = req.body.Item.Review
+    newRev.save()
+
+})
+
 
 
 

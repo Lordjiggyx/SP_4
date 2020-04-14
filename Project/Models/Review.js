@@ -4,9 +4,8 @@ const mongoose = require("mongoose")
 //Customer Scehema for customer fields
 const ReviewSchema = new mongoose.Schema(
     {
-        ItemId:{
-            type: mongoose.Schema.Types.ObjectId,
-            ref:'items'
+        ItemName:{
+            type:String
         }
         ,
         Review:{
