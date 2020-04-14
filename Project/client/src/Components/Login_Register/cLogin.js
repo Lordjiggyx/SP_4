@@ -15,8 +15,7 @@ export class cLogin extends Component {
         EmptyError:null,
         ServerError:false,
         visible : false,
-        step:0,
-        admin:null
+        step:0
 
     }
 
@@ -74,7 +73,7 @@ export class cLogin extends Component {
                 else
                 {
                     console.log(res.data)
-                    this.setState({step:1, admin:false})
+                    this.setState({step:1})
                 }
             
             })
@@ -119,7 +118,8 @@ export class cLogin extends Component {
         case 1:
         return(
             <Shop
-            admin={this.state.admin}/>
+            admin={false}
+            email={this.state.email}/>
         )
     }
 }

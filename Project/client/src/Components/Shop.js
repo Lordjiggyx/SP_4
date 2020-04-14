@@ -11,7 +11,7 @@ export class Shop extends Component {
 
 
     state ={
-        email:"",
+        email:this.props.email,
         items:[],
         admin:this.props.admin,
         addStock:false,
@@ -22,7 +22,9 @@ export class Shop extends Component {
         title:"",
         query:"",
         queryType:"Title",
-        sortType:"Title - Ascending"
+        sortType:"Title - Ascending",
+        viewCart:false
+        
         
     }
 
@@ -72,6 +74,14 @@ export class Shop extends Component {
        })
     }
 
+    buyItems=()=>
+    {
+
+       const  cart = this.state.cart
+
+        axios.post(`Customer/buyItems/${this.state.email}` , {cart})
+        .then(res => console.log("items Bought")).then(this.setState({cart:[]})).then(this.getItems()).then(this.getItems())
+    }
 
     removeStock=()=>
     {
@@ -169,7 +179,19 @@ export class Shop extends Component {
                     {this.state.admin==false ? <h3>Items in cart {this.state.cart.length}</h3> : null}
                     <Container>
                     
-                    {this.state.admin==false ? <Button>View Cart </Button> : null}
+                    {this.state.admin==false ? <Button onClick={()=>this.setState({viewCart:!this.state.viewCart})}>View Cart </Button> : null}
+                    {this.state.viewCart==true ?
+
+                    <Container>
+                    <h3>Cart</h3>
+                    {this.state.cart.map((item , i)=>
+                    <ul>{item.Title}</ul>
+                    )}
+                    <Button onClick={this.buyItems}>Buy Items</Button>
+                    <Button onClick={()=>this.setState({viewCart:!this.state.viewCart})}>Close Cart</Button>
+                    
+                </Container> : null
+                    }
                     </Container>
                     <Input type="text" className="input" placeholder="Search By..." onChange={this.handleChange("query")}/>
                     <Input type = "select" placeholder= "select"  onChange={this.handleChange("queryType")}>
@@ -245,18 +267,7 @@ export class Shop extends Component {
 
                 </Modal>
 
-                {/* <Modal isOpen={this.state.addCart} toggle={this.cartAdd}>
-                    <ModalHeader>Add To Cart</ModalHeader>
-                    <ModalBody>
-                        
-                            <Label for="quantity">Quantity</Label>
-                            <Input  type="text" name = "quantity "id="quantity1" onChange={this.handleChange("quantity")}></Input>
-
-                            <Button onClick={()=>this.addToCart()}>Add To Cart</Button>
-                            <Button onClick={()=>this.cartAdd(" ")}>Cancel</Button>
-                    </ModalBody>
-
-                </Modal> */}
+               
 
                 <Modal isOpen={this.state.removeStock} toggle={this.RMT}>
                     <ModalHeader>Remove Stock</ModalHeader>

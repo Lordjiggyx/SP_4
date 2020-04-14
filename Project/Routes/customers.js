@@ -4,7 +4,8 @@ const router = express.Router()
 
 //Bring in Customer model
 const Customer = require("../Models/Customer")
-
+const Item = require("../Models/Item")
+const po = require("../Models/po")
 //Test
 router.get("/Customer/test" , (req , res)=>
 {
@@ -60,5 +61,36 @@ router.post("/Customer/login" , (req , res)=>
     )
     
 })
+
+
+router.post("/Customer/buyItems/:email" , (req , res)=>
+{
+    req.body.cart.forEach(element => {
+        Item.findOne({Title:element.Title})
+        .then(item =>{
+            item.Stock = item.Stock - 1
+            item.save()
+        
+
+          
+
+        }
+            )
+            
+    });
+    const d = new Date();
+    let year = d.getFullYear();
+    let month = (1 + d.getMonth()).toString().padStart(2, '0');
+    let day = d.getDate().toString().padStart(2, '0');
+
+    const date = `${day}/${month}/${year}`
+    const pos = new po()
+    pos.Date = date
+    pos.Email = req.params.email
+    pos.save()
+    
+})
+
+
 
 module.exports = router
