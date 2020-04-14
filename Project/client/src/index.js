@@ -15,7 +15,9 @@ import Register from "./Components/Login_Register/Register"
 import Login from './Components/Login_Register/Login';
 import alogin from './Components/Login_Register/alogin';
 import cLogin from './Components/Login_Register/cLogin';
-
+// import title from './Components/Search/title'
+// import category from './Components/Search/category'
+// import manu from './Components/Search/manu'
 
 
 const routes =(
@@ -26,6 +28,10 @@ const routes =(
       <Route path = "/Login" component={Login}/>
       <Route path = "/aLogin" component={alogin}/>
       <Route path = "/cLogin" component={cLogin}/>
+      {/* <Route path = "/sBytitle" component={title}/>
+      <Route path = "/sByCategory" component={category}/>
+      <Route path = "/sByManu" component={manu}/> */}
+      
       
     </div>
   </Router>

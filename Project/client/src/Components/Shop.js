@@ -17,7 +17,9 @@ export class Shop extends Component {
         addStock:false,
         removeStock:false,
         quantity:0,
-        title:""
+        title:"",
+        query:"",
+        queryType:"Title"
     }
 
     componentDidMount()
@@ -31,6 +33,7 @@ export class Shop extends Component {
         .then(res =>
             {
                 this.setState({items:res.data})
+                return res.data
             })
     }
 
@@ -82,29 +85,84 @@ export class Shop extends Component {
 
     }
 
+
+    // SearchBar= (e)=>{
+
+    //     let currentList=[]
+    //     let newList=[]
+        
+    //     if(e.target.value !== "")
+    //     {
+    //         currentList =this.state.items
+
+    //         newList = currentList.filter(item =>
+    //             {
+    //                 const lc = item.Title.toLowerCase()
+
+    //                 const filter = e.target.value.toLowerCase()
+
+    //                 return lc.includes(filter)
+    //             })
+    //     }
+    //     else
+    //     {
+    //         newList= this.getItems()
+    //         this.setState({items:newList})
+    //     }
+
+       
+        
+    // }
+
+
+
     render() {
+        let filteredItems =this.state.items.filter(
+            (item)=>
+            {
+                if(this.state.queryType == "Title")
+                {
+                    return item.Title.toLowerCase().indexOf(this.state.query.toLowerCase()) !== -1
+                }
+                if(this.state.queryType == "Category")
+                {
+                    return item.Category.toLowerCase().indexOf(this.state.query.toLowerCase()) !== -1
+                }
+                if(this.state.queryType == "Manufacturer")
+                {
+                    return item.ManuFact.toLowerCase().indexOf(this.state.query.toLowerCase()) !== -1
+                }
+                
+                
+            }
+        )
         return (
+                
             <div>
                 <Container>
                     <h1>Welcome to the shop</h1>
                     
                     <h2>Items</h2>
                     <Container>
-                    <Button>Search By Title </Button>
-                    <Button>Search By Category </Button>
-                    <Button>Search By Manufacteur </Button>
+                    
                     {this.state.admin==false ? <Button>View Cart </Button> : null}
                     </Container>
-
+                    <Input type="text" className="input" placeholder="Search By..." onChange={this.handleChange("query")}/>
+                    <Input type = "select" placeholder= "select"  onChange={this.handleChange("queryType")}>
+                        <option>Title</option>
+                        <option>Category</option>
+                        <option>Manufacturer</option>
+                    </Input>
                     <Row>
-                        
-                        {this.state.items.map((item , i)=>
+                    
+                        {filteredItems.map((item , i)=>
                         
                         <Card key ={i}style={{width:"300px"}}>
                         <CardImg style={{width:"100px"}} src={item.ImageLink}/>
                         <CardTitle>{item.Title}</CardTitle>
                         <CardBody>
                         <p>Category:{item.Category}</p>
+                        <p>Manufacturer:{item.ManuFact}</p>
                         <p>Price:{item.Price}</p>
                         <p>Current Stock:{item.Stock}</p>
                         </CardBody>
