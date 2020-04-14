@@ -18,12 +18,16 @@ export class Shop extends Component {
         removeStock:false,
         addCart:false,
         cart:[],
+        Customers:[],
         quantity:0,
         title:"",
         query:"",
         queryType:"Title",
         sortType:"Title - Ascending",
-        viewCart:false
+        viewCart:false,
+        ViewCustomers:false,
+        ViewCustomerHistory:false,
+        CustomerHistory:[]
         
         
     }
@@ -31,8 +35,23 @@ export class Shop extends Component {
     componentDidMount()
     {
         this.getItems()
+        if(this.state.admin == true)
+        {
+            this.getCustomers()
+        }
     }
 
+    getCustomers()
+    {
+        axios.get("/Customer/getall")
+        .then(res => this.setState({Customers:res.data}))
+    }
+
+    getCustomerHistory(email)
+    {
+        axios.get(`/Customer/history/${email}`)
+        .then(res => this.setState({CustomerHistory:res.data , ViewCustomerHistory:true}))
+    }
     getItems()
     {
         axios.get("/Items/unsorted")
@@ -192,6 +211,37 @@ export class Shop extends Component {
                     
                 </Container> : null
                     }
+
+                    {this.state.admin==true ? <Button onClick={()=>this.setState({ViewCustomers:!this.state.ViewCustomers})}>View Customers </Button> : null}
+                    {this.state.ViewCustomers==true ?
+                    <Container>
+                    <h3>Customers</h3>
+                    {this.state.Customers.map((item , i)=>
+                    <ul>Customer Email :{ item.Email}
+                    <Button onClick={()=>{this.getCustomerHistory(item.Email)}}>View History</Button>
+                    </ul>
+                    )}
+
+                    <Button onClick={()=>this.setState({ViewCustomers:!this.state.ViewCustomers ,ViewCustomerHistory:!this.state.ViewCustomerHistory , CustomerHistory:[]})}>Close</Button>
+
+                    </Container> : null
+                    }
+                    {this.state.ViewCustomerHistory == true? 
+                    
+                    <Container>
+                    <h3>History</h3>
+                    {this.state.CustomerHistory.map((item , i)=>
+                    <ul>
+                    Date Of Purchase:{item.Date}
+                    Customer Email :{ item.Email}
+                    </ul>
+                    )}
+                    <Button onClick={()=>this.setState({ViewCustomerHistory:!this.state.ViewCustomerHistory , CustomerHistory:[]})}>Close</Button>
+
+                    </Container> : null
+                    }
+                    
+
                     </Container>
                     <Input type="text" className="input" placeholder="Search By..." onChange={this.handleChange("query")}/>
                     <Input type = "select" placeholder= "select"  onChange={this.handleChange("queryType")}>

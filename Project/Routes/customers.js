@@ -7,9 +7,15 @@ const Customer = require("../Models/Customer")
 const Item = require("../Models/Item")
 const po = require("../Models/po")
 //Test
-router.get("/Customer/test" , (req , res)=>
+router.get("/Customer/getall" , (req , res)=>
 {
-    return res.json("customer")
+    Customer.find().then(cus => res.json(cus))
+})
+
+
+router.get("/Customer/history/:email" , (req , res)=>
+{
+    po.find({Email:req.params.email}).then(cus => res.json(cus))
 })
 
 router.post("/Customer/register" , (req , res)=>
