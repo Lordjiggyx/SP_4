@@ -19,7 +19,9 @@ export class Shop extends Component {
         quantity:0,
         title:"",
         query:"",
-        queryType:"Title"
+        queryType:"Title",
+        sortType:""
+        
     }
 
     componentDidMount()
@@ -86,37 +88,37 @@ export class Shop extends Component {
     }
 
 
-    // SearchBar= (e)=>{
-
-    //     let currentList=[]
-    //     let newList=[]
-        
-    //     if(e.target.value !== "")
-    //     {
-    //         currentList =this.state.items
-
-    //         newList = currentList.filter(item =>
-    //             {
-    //                 const lc = item.Title.toLowerCase()
-
-    //                 const filter = e.target.value.toLowerCase()
-
-    //                 return lc.includes(filter)
-    //             })
-    //     }
-    //     else
-    //     {
-    //         newList= this.getItems()
-    //         this.setState({items:newList})
-    //     }
-
+    sortItem(e)
+    {
+        console.log(e.target.value)
+        this.setState({sortType:e.target.value})
        
-        
-    // }
+    }
 
 
 
     render() {
+
+        if(this.state.sortType == "Title - Ascending")
+        {
+            this.state.items.sort((a,b)=> (a.Title > b.Title) ? 1 : -1)
+        }
+        else if(this.state.sortType == "Title - Descending")
+        {
+            this.state.items.sort((a,b)=> (a.Title > b.Title) ? -1 : 1)
+        }
+       else  if(this.state.sortType ="Price - Ascending")
+        {
+            this.state.items.sort((a,b)=> (a.Price > b.Price) ? 1 : -1)
+        }
+
+        else if(this.state.sortType ="Price - Descending")
+        {
+            this.state.items.sort((a,b)=> (a.Price > b.Price) ? -1 : -1)
+        }
+
+
+
         let filteredItems =this.state.items.filter(
             (item)=>
             {
@@ -136,6 +138,7 @@ export class Shop extends Component {
                 
             }
         )
+        
         return (
                 
             <div>
@@ -152,6 +155,13 @@ export class Shop extends Component {
                         <option>Title</option>
                         <option>Category</option>
                         <option>Manufacturer</option>
+                    </Input>
+                    <Input type = "select" placeholder= "select"  onChange={(e)=>this.sortItem(e)}>
+                      
+                        <option>Title - Ascending</option>
+                        <option>Title - Descending </option>
+                        <option>Price - Ascending</option>
+                        <option>Price - Descending</option>
                     </Input>
                     <Row>
                     
