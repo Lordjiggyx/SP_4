@@ -33,11 +33,16 @@ export class alogin extends Component {
         const {email , password} = this.state
         if(email ==""  || password ==""   )
         {
-            this.setState({EmptyError:true})
+            this.setState({EmptyError:true , visible:true},()=>
+            {
+                window.setTimeout(()=>{
+                    this.setState({ EmptyError:false,visible:false})
+                  },2500)
+            })
         }
         else
         {
-
+            
             const user = 
             {
                 email:email,
@@ -60,7 +65,7 @@ export class alogin extends Component {
                     },()=>
                     {
                         window.setTimeout(()=>{
-                            this.setState({visible:false})
+                            this.setState({visible:false ,ServerError:false,})
                           },2500)
                     })
                 }
@@ -99,7 +104,7 @@ export class alogin extends Component {
                     <Button onClick={this.Login}>Submit</Button>      
 
                     </FormGroup>
-                    {this.state.EmptyError==true ? <Alert isOpen={this.state.visible} color="danger">Enter  All Fields</Alert> : null}
+                    {this.state.EmptyError==true && this.state.visible==true ? <Alert isOpen={this.state.visible} color="danger">Enter  All Fields</Alert> : null}
                   {this.state.ServerError==true ? <Alert  isOpen={this.state.visible}color="danger">{this.state.servermsg}</Alert> : null}
 
                     <Link to= "/Login">
